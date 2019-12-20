@@ -44,22 +44,36 @@ describe("POST /api/auth/login", () => {
       });
   });
 
-  //   it("auth Example", function() {
-  //     return request(server)
-  //       .post("/api/auth/login")
-  //       .send({ username: "123", password: "123" })
-  //       .then(res => {
-  //         const token = res.body.token;
-  //         return request(server)
-  //           .get("api/jokes")
-  //           .set("authorization", token)
-  //           .then(res => {
-  //             request(axios)
-  //               .get("https://icanhazdadjoke.com/search")
-  //               .set("accept", "application/json");
-  //             expect(res.status).toBe(200);
-  //             expect(Array.isArray(res.body)).toBe(true);
-  //           });
-  //       });
-  //   });
+  it("returns array of jokes", () => {
+    const newUser = { username: "RedMoon15", password: "claDS*123" };
+
+    const existingUser = { username: "RedMoon15", password: "claDS*123" };
+
+    return request(server)
+      .post("/api/auth/register")
+
+      .send(newUser)
+
+      .then(() => {
+        return request(server)
+          .post("/api/auth/login")
+
+          .send(existingUser)
+
+          .expect(200)
+
+          .then(res => {
+            const token = res.body.token;
+
+            return request(server)
+              .get("/api/jokes")
+
+              .set("authorization", token)
+
+              .then(res => {
+                expect(Array.isArray(res.body)).toBe(true);
+              });
+          });
+      });
+  });
 });
