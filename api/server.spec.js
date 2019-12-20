@@ -45,26 +45,18 @@ describe("POST /api/auth/login", () => {
   });
 
   it("returns array of jokes", () => {
-    const newUser = { username: "RedMoon15", password: "claDS*123" };
-
-    const existingUser = { username: "RedMoon15", password: "claDS*123" };
-
+    const newUser = { username: "1", password: "123" };
+    const existingUser = { username: "1", password: "123" };
     return request(server)
       .post("/api/auth/register")
-
       .send(newUser)
-
       .then(() => {
         return request(server)
           .post("/api/auth/login")
-
           .send(existingUser)
-
           .expect(200)
-
           .then(res => {
             const token = res.body.token;
-
             return request(server)
               .get("/api/jokes")
 
