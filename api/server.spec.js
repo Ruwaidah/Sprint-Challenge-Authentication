@@ -45,10 +45,10 @@ describe("POST /api/auth/login", () => {
   });
 
   it("returns array of jokes", () => {
-    const existingUser = { username: "1", password: "123" };
+    const user = { username: "1", password: "123" };
     return request(server)
       .post("/api/auth/login")
-      .send(existingUser)
+      .send(user)
       .expect(200)
       .then(res => {
         const token = res.body.token;

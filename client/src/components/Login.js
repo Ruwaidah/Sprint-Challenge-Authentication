@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { loginReq } from "../actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Login(props) {
   console.log(props);
@@ -17,18 +18,20 @@ function Login(props) {
   };
   const onSubmit = event => {
     event.preventDefault();
-    props.loginReq(values);
-    props.history.push("/users");
+    props.loginReq(values, props.history);
+    props.history.push("/jokes");
   };
   return (
     <div>
+      {sessionStorage.getItem("token") ? props.history.push("/jokes") : null}
       <form onSubmit={onSubmit}>
         <label>Username</label>
         <input name="username" type="text" onChange={onChange} />
         <label>Password</label>
         <input name="password" type="password" onChange={onChange} />
         <button>Login</button>
-      </form>
+      </form>{" "}
+      <Link to="/signup">SignUp</Link>
     </div>
   );
 }

@@ -1,10 +1,13 @@
-import { OADING, LOGIN_FETCH, LOGIN_FAILED } from "../actions";
+import { OADING, LOGIN_FETCH, LOGIN_FAILED, JOKES_FETCH } from "../actions";
 
 const initiallstate = {
   user: {
     username: "",
     password: ""
-  }
+  },
+  jokes: [],
+  isloading: false,
+  error: null
 };
 
 export const rootReducer = (state = initiallstate, actions) => {
@@ -18,6 +21,12 @@ export const rootReducer = (state = initiallstate, actions) => {
         token: sessionStorage.getItem("token"),
         isloading: false,
         error: null
+      };
+    case JOKES_FETCH:
+      console.log(actions);
+      return {
+        ...state,
+        jokes: actions.payload
       };
     default:
       return state;
